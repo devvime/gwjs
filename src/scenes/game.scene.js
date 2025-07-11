@@ -1,7 +1,7 @@
 import Scene from "../core/scene";
-import { Player } from "../entities/player.entity";
+import { Player } from "../entities/player/player.entity";
 
-export default class MainMenu extends Scene {
+export default class Game extends Scene {
   player = new Player(this.game);
 
   create() {

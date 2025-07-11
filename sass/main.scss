@@ -14,3 +14,14 @@ canvas {
   margin: auto;
   background-color: #444;
 }
+
+#container {
+  display: none;
+  &.active {
+    display: block;
+    width: 100vw;
+    height: 100vw;
+    position: absolute;
+    z-index: 99;
+  }
+}

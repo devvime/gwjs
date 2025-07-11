@@ -11,6 +11,7 @@ export class Entity {
 
   animations = {}; // { name: { frames: [], frameRate: 100 } }
   currentAnimation = null;
+  currentAnimationState = null;
   currentFrameIndex = 0;
   frameTimer = 0;
 
@@ -36,10 +37,13 @@ export class Entity {
   }
 
   setAnimation(name) {
-    if (this.animations[name]) {
-      this.currentAnimation = this.animations[name];
-      this.currentFrameIndex = 0;
-      this.frameTimer = 0;
+    if (name !== this.currentAnimationState) {
+      this.currentAnimationState = name;
+      if (this.animations[name]) {
+        this.currentAnimation = this.animations[name];
+        this.currentFrameIndex = 0;
+        this.frameTimer = 0;
+      }
     }
   }
 

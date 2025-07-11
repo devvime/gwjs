@@ -1,6 +1,6 @@
-import { Entity } from "../core/entity";
-import { keys } from "../core/keys";
-import { generateFrames } from "../core/generateFrames";
+import { Entity } from "../../core/entity";
+import { keys } from "../../core/keys";
+import { animations } from "./animations";
 
 export class Player {
   game = null;
@@ -18,30 +18,9 @@ export class Player {
       width: 48,
       height: 48,
       sprite: "public/assets/game/sprites/characters/player.png",
-      animations: {
-        idle: {
-          frameRate: 100,
-          frames: generateFrames({
-            width: 48,
-            height: 48,
-            row: 0,
-            frameCount: 6,
-          }),
-        },
-        walk: {
-          frameRate: 100,
-          frames: generateFrames({
-            width: 48,
-            height: 48,
-            row: 1,
-            frameCount: 6,
-          }),
-        },
-      },
+      animations,
     });
     this.object.velocity = 1.5;
-
-    this.object.setAnimation("idle");
   }
 
   draw() {
@@ -52,19 +31,17 @@ export class Player {
     this.object.update(this.game.deltaTime);
     this.movement();
     this.run();
+    this.animation();
   }
 
   movement() {
     if (keys["w"]) {
       this.object.position.y -= this.object.velocity;
-    }
-    if (keys["s"]) {
+    } else if (keys["s"]) {
       this.object.position.y += this.object.velocity;
-    }
-    if (keys["a"]) {
+    } else if (keys["a"] && !keys["d"]) {
       this.object.position.x -= this.object.velocity;
-    }
-    if (keys["d"]) {
+    } else if (keys["d"] && !keys["a"]) {
       this.object.position.x += this.object.velocity;
     }
   }
@@ -74,6 +51,22 @@ export class Player {
       this.object.velocity = 3;
     } else {
       this.object.velocity = 1.5;
+    }
+  }
+
+  animation() {
+    if (keys["w"]) {
+      this.object.setAnimation("walkUp");
+    } else if (keys["s"]) {
+      this.object.setAnimation("walkDown");
+    } else if (keys["d"] && !keys["a"]) {
+      this.object.flip = false;
+      this.object.setAnimation("walkLeft");
+    } else if (keys["a"] && !keys["d"]) {
+      this.object.flip = true;
+      this.object.setAnimation("walkLeft");
+    } else {
+      this.object.setAnimation("idle");
     }
   }
 }
