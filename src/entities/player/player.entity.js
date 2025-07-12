@@ -14,8 +14,8 @@ export class Player {
   create() {
     this.object = new Entity({
       game: this.game,
-      x: 50,
-      y: 50,
+      x: 100,
+      y: 100,
       width: 48,
       height: 48,
       body: { width: 15, height: 22, offsetX: 17, offsetY: 21 },

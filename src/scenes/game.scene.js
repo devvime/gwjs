@@ -1,7 +1,7 @@
 import { Entity } from "../core/entity";
 import Scene from "../core/scene";
 import { Player } from "../entities/player/player.entity";
-import { Slimes } from "../entities/slime/slime.entity";
+import { Slimes } from "../entities/slime/slimes.entity";
 
 export default class Game extends Scene {
   player = new Player(this.game);
