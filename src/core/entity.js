@@ -11,7 +11,7 @@ export class Entity {
   flip = false;
   animations = {}; // { name: { frames: [], frameRate: 100 } }
   currentAnimation = null;
-  currentAnimationState = null;
+  currentAnimationState = undefined;
   currentFrameIndex = 0;
   frameTimer = 0;
 

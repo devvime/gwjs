@@ -1,6 +1,6 @@
 import { Entity } from "../../core/entity";
 import { keys } from "../../core/keys";
-import { animations } from "./animations";
+import { animations } from "./player.animations";
 
 export class Player {
   game = null;
@@ -18,12 +18,7 @@ export class Player {
       y: 50,
       width: 48,
       height: 48,
-      body: {
-        width: 15,
-        height: 22,
-        offsetX: 17,
-        offsetY: 21,
-      },
+      body: { width: 15, height: 22, offsetX: 17, offsetY: 21 },
       sprite: "public/assets/game/sprites/characters/player.png",
       animations,
     });
