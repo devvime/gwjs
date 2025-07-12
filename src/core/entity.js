@@ -6,9 +6,9 @@ export class Entity {
   color = "black";
   sprite = null;
   spriteImage = null;
+  body = { width: 10, height: 10, offsetX: 0, offsetY: 0 };
   visible = true;
   flip = false;
-
   animations = {}; // { name: { frames: [], frameRate: 100 } }
   currentAnimation = null;
   currentAnimationState = null;
@@ -23,13 +23,12 @@ export class Entity {
     this.height = settings.height;
     this.sprite = settings.sprite || null;
     this.color = settings.color || "black";
-
+    if (settings.body) this.body = settings.body;
     if (this.sprite) {
       const img = new Image();
       img.src = this.sprite;
       this.spriteImage = img;
     }
-
     if (settings.animations) {
       this.animations = settings.animations;
       this.setAnimation(Object.keys(settings.animations)[0]);
@@ -49,11 +48,8 @@ export class Entity {
 
   update(deltaTime) {
     if (!this.currentAnimation) return;
-
     this.frameTimer += deltaTime;
-
     const frameDuration = this.currentAnimation.frameRate;
-
     if (this.frameTimer >= frameDuration) {
       this.frameTimer = 0;
       this.currentFrameIndex =
@@ -63,14 +59,11 @@ export class Entity {
 
   draw() {
     if (!this.visible) return;
-
     this.game.canvas.save();
-
     if (this.flip) {
       this.game.canvas.translate(this.position.x + this.width, this.position.y);
       this.game.canvas.scale(-1, 1);
     }
-
     if (this.spriteImage && this.currentAnimation) {
       const frame = this.currentAnimation.frames[this.currentFrameIndex];
       this.game.canvas.drawImage(
@@ -92,25 +85,35 @@ export class Entity {
         this.width,
         this.height
       );
-    } else {
+    }
+    if (this.game.debug) {
       this.game.canvas.fillStyle = this.color;
-      this.game.canvas.fillRect(
-        this.position.x,
-        this.position.y,
-        this.width,
-        this.height
+      this.game.canvas.strokeStyle = "red";
+      this.game.canvas.strokeRect(
+        this.flip ? 0 + this.body.offsetX : this.position.x + this.body.offsetX,
+        this.flip ? 0 + this.body.offsetY : this.position.y + this.body.offsetY,
+        this.body.width,
+        this.body.height
       );
     }
-
     this.game.canvas.restore();
   }
 
   collide(obj) {
+    const a = {
+      x: this.position.x + this.body.offsetX,
+      y: this.position.y + this.body.offsetY,
+      w: this.body.width,
+      h: this.body.height,
+    };
+    const b = {
+      x: obj.position.x + obj.body.offsetX,
+      y: obj.position.y + obj.body.offsetY,
+      w: obj.body.width,
+      h: obj.body.height,
+    };
     return (
-      this.position.x < obj.position.x + obj.width &&
-      this.position.x + this.width > obj.position.x &&
-      this.position.y < obj.position.y + obj.height &&
-      this.position.y + this.height > obj.position.y
+      a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y
     );
   }
 }

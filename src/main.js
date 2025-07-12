@@ -4,7 +4,9 @@ const game = new Game({
   scale: 3,
 });
 
-game.setScene("mainMenu");
+game.setScene("game");
+
+game.debug = true;
 
 let lastTime = performance.now();
 

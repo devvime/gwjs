@@ -11,6 +11,7 @@ export default class Game {
     draw() {},
     update() {},
   };
+  debug = false;
 
   constructor(settings) {
     this.settings = settings;

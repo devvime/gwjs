@@ -5,6 +5,7 @@ import { animations } from "./animations";
 export class Player {
   game = null;
   object = null;
+  collisions = [];
 
   constructor(game) {
     this.game = game;
@@ -17,6 +18,12 @@ export class Player {
       y: 50,
       width: 48,
       height: 48,
+      body: {
+        width: 15,
+        height: 22,
+        offsetX: 17,
+        offsetY: 21,
+      },
       sprite: "public/assets/game/sprites/characters/player.png",
       animations,
     });
