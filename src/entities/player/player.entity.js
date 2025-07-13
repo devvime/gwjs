@@ -6,6 +6,8 @@ export class Player {
   game = null;
   object = null;
   collisions = [];
+  isAttacking = false;
+  attackReady = true;
 
   constructor(game) {
     this.game = game;
@@ -23,6 +25,7 @@ export class Player {
       animations,
     });
     this.object.velocity = 1.5;
+    window.addEventListener("click", () => this.attack());
   }
 
   draw() {
@@ -57,18 +60,29 @@ export class Player {
   }
 
   animation() {
+    if (this.isAttacking) return;
     if (keys["w"]) {
       this.object.setAnimation("walkUp");
     } else if (keys["s"]) {
       this.object.setAnimation("walkDown");
     } else if (keys["d"] && !keys["a"]) {
       this.object.flip = false;
-      this.object.setAnimation("walkLeft");
+      this.object.setAnimation("walkRight");
     } else if (keys["a"] && !keys["d"]) {
       this.object.flip = true;
-      this.object.setAnimation("walkLeft");
+      this.object.setAnimation("walkRight");
     } else {
       this.object.setAnimation("idle");
+    }
+  }
+
+  attack() {
+    if (!this.isAttacking && this.attackReady) {
+      this.attackReady = false;
+      this.isAttacking = true;
+      this.object.setAnimation("attackRight");
+      setTimeout(() => (this.isAttacking = false), 300);
+      setTimeout(() => (this.attackReady = true), 500);
     }
   }
 }

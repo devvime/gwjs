@@ -28,13 +28,22 @@ export const animations = {
       frameCount: 6,
     }),
   },
-  walkLeft: {
+  walkRight: {
     frameRate: 100,
     frames: generateFrames({
       width: 48,
       height: 48,
       row: 4,
       frameCount: 6,
+    }),
+  },
+  attackRight: {
+    frameRate: 100,
+    frames: generateFrames({
+      width: 48,
+      height: 48,
+      row: 7,
+      frameCount: 3,
     }),
   },
 };
