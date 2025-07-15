@@ -47,4 +47,16 @@ export default class Game {
     this.currentScene.draw();
     this.currentScene.update();
   }
+
+  start() {
+    let lastTime = performance.now();
+    const main = (timestamp) => {
+      const deltaTime = timestamp - lastTime;
+      lastTime = timestamp;
+      this.deltaTime = deltaTime;
+      this.run();
+      requestAnimationFrame(main);
+    };
+    main(performance.now());
+  }
 }

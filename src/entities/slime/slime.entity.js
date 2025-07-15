@@ -16,8 +16,8 @@ export class Slime {
   create() {
     this.object = new Entity({
       game: this.game,
-      x: randomFloat(0, window.innerWidth),
-      y: randomFloat(0, window.innerHeight),
+      x: randomFloat(-10, window.innerWidth),
+      y: randomFloat(-10, window.innerHeight),
       width: 32,
       height: 32,
       body: { width: 15, height: 15, offsetX: 8.5, offsetY: 10.5 },

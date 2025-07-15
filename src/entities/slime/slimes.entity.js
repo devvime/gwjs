@@ -53,39 +53,4 @@ export class Slimes {
       slime.object.setAnimation("idle");
     });
   }
-
-  spawnSlime() {
-    const maxAttempts = 10;
-    let attempts = 0;
-    let position;
-    let minDistance = 1.5; // distância mínima entre slimes
-
-    do {
-      // Gera uma posição aleatória próxima ao player
-      position = {
-        x: this.player.object.position.x + randomFloat(-5, 5),
-        y: this.player.object.position.y + randomFloat(-5, 5),
-      };
-
-      // Verifica se a nova posição colide com algum slime existente
-      const overlapping = this.slimes.some((slime) => {
-        const dx = slime.object.position.x - position.x;
-        const dy = slime.object.position.y - position.y;
-        const dist = Math.hypot(dx, dy);
-        return dist < minDistance;
-      });
-
-      if (!overlapping) break;
-      attempts++;
-    } while (attempts < maxAttempts);
-
-    // Se encontrou uma posição válida, cria o slime
-    if (attempts < maxAttempts) {
-      const slime = new Slime(this.game, this.player);
-      slime.object.position.x = position.x;
-      slime.object.position.y = position.y;
-      this.slimes.push(slime);
-      slime.create();
-    }
-  }
 }
